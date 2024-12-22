@@ -11,13 +11,16 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverPanel;
     public GameObject GameOverHiPanel;
     public GameObject PausePanel;
+    public GameObject PauseHiPanel;
     private bool isStart;
 
     public GameObject InvisibleButton;
+    public GameObject PauseButton;
     public GameObject Teacher;
+    public GameObject NewRecord;
 
-    public float initialGameSpeed = 5f;
-    public float gameSpeedIncrease = 0.1f;
+    public float initialGameSpeed = 10f;
+    public float gameSpeedIncrease = 5f;
     public float gameSpeed { get; private set; }
 
     public GameObject label;
@@ -26,6 +29,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText1;
     public TextMeshProUGUI scoreText2;
     public TextMeshProUGUI scoreText3;
+    public TextMeshProUGUI scoreText4;
     public TextMeshProUGUI hiscoreText;
     public TextMeshProUGUI hiscoreText1;
     public TextMeshProUGUI hiscoreText2;
@@ -39,8 +43,10 @@ public class GameManager : MonoBehaviour
     public float Score => score;
 
     private bool isPaused = false;
+    private bool flag = true;
 
     private float startTime;
+
 
     private void Awake()
     {
@@ -111,6 +117,7 @@ public class GameManager : MonoBehaviour
         UpdateHiscore();
     }
 
+
     public void StartGameButtonClick()
     {
         isStart = !isStart;
@@ -121,7 +128,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-
         if (Time.time - startTime > 5.0f) // Проверка, прошли ли первые 5 секунды
         {
             Teacher.gameObject.SetActive(false); ; 
@@ -130,36 +136,89 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
             TogglePause();
 
+        float hiscore = PlayerPrefs.GetFloat("hiscore", 0);
+        if (score > hiscore & hiscore > 0 & score > 27 & flag)
+        {
+            flag = false;
+            NewRecord.gameObject.SetActive(true);
+            Invoke("DeactivateNewRecord", 5f); // Запланировать вызов функции DeactivateNewRecord через 5 секунд
+        }
+
+        if(hiscore == 0)
+        {
+           hiscore = score;
+            hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5");
+            hiscoreText1.text = Mathf.FloorToInt(hiscore).ToString("D5");
+            hiscoreText2.text = Mathf.FloorToInt(hiscore).ToString("D5");
+        }
+        
+
         score += gameSpeed * Time.deltaTime;
         scoreText.text = Mathf.FloorToInt(score).ToString("D5");
         scoreText1.text = Mathf.FloorToInt(score).ToString("D5");
         scoreText2.text = Mathf.FloorToInt(score).ToString("D5");
         scoreText3.text = Mathf.FloorToInt(score).ToString("D5");
+        scoreText4.text = Mathf.FloorToInt(score).ToString("D5");
 
     }
 
+    private void DeactivateNewRecord()
+    {
+        NewRecord.gameObject.SetActive(false);
+    }
+
+
     public void TogglePause()
     {
-        if (!isPaused)
+        float hiscore = PlayerPrefs.GetFloat("hiscore", 0);
+        if (score > hiscore)
         {
-            isPaused = true;
-            Time.timeScale = 0f; 
-            PausePanel.SetActive(true);
-            scoreText.gameObject.SetActive(false);
-            hiscoreText.gameObject.SetActive(false);
-            label.SetActive(false);
-            labelHI.SetActive(false);
+            if (!isPaused)
+            {
+                isPaused = true;
+                Time.timeScale = 0f;
+                PauseHiPanel.SetActive(true);
+                scoreText.gameObject.SetActive(false);
+                hiscoreText.gameObject.SetActive(false);
+                label.SetActive(false);
+                labelHI.SetActive(false);
+            }
+            else
+            {
+                isPaused = false;
+                Time.timeScale = 1f;
+                PauseHiPanel.SetActive(false);
+                scoreText.gameObject.SetActive(true);
+                hiscoreText.gameObject.SetActive(true);
+                label.SetActive(true);
+                labelHI.SetActive(true);
+            }
         }
-        else
+
+        else 
         {
-            isPaused = false;
-            Time.timeScale = 1f;  
-            PausePanel.SetActive(false);
-            scoreText.gameObject.SetActive(true);
-            hiscoreText.gameObject.SetActive(true);
-            label.SetActive(true);
-            labelHI.SetActive(true);
+            if (!isPaused)
+            {
+                isPaused = true;
+                Time.timeScale = 0f;
+                PausePanel.SetActive(true);
+                scoreText.gameObject.SetActive(false);
+                hiscoreText.gameObject.SetActive(false);
+                label.SetActive(false);
+                labelHI.SetActive(false);
+            }
+            else
+            {
+                isPaused = false;
+                Time.timeScale = 1f;
+                PausePanel.SetActive(false);
+                scoreText.gameObject.SetActive(true);
+                hiscoreText.gameObject.SetActive(true);
+                label.SetActive(true);
+                labelHI.SetActive(true);
+            }
         }
+       
     }
 
     private void UpdateHiscore()
