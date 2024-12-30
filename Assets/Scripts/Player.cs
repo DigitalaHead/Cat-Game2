@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    AudioManager audioManager;
+
     private CharacterController character;
     private Vector3 direction;
 
@@ -12,6 +14,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         character = GetComponent<CharacterController>();
     }
 
@@ -30,6 +33,7 @@ public class Player : MonoBehaviour
 
             if (Input.GetButton("Jump"))
             {
+                audioManager.PlaySFX(audioManager.jump);
                 direction = Vector3.up * jumpForce;
             }
         }
@@ -42,6 +46,7 @@ public class Player : MonoBehaviour
         if (other.CompareTag("Obstacle"))
         {
             GameManager.Instance.GameOver();
+            audioManager.PlaySFX(audioManager.death);
         }
     }
 

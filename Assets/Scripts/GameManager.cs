@@ -7,11 +7,12 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    
+
     public static GameManager Instance { get; private set; }
     public GameObject GameOverPanel;
     public GameObject GameOverHiPanel;
     public GameObject PausePanel;
-    public GameObject PauseHiPanel;
     private bool isStart;
 
     public GameObject InvisibleButton;
@@ -26,15 +27,20 @@ public class GameManager : MonoBehaviour
     public GameObject label;
     public GameObject labelHI;
     public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI scoreText1;
+    public TextMeshProUGUI scoreTextInPausePanel;
+    public TextMeshProUGUI scorePauseLabel;
     public TextMeshProUGUI scoreText2;
     public TextMeshProUGUI scoreText3;
-    public TextMeshProUGUI scoreText4;
     public TextMeshProUGUI hiscoreText;
-    public TextMeshProUGUI hiscoreText1;
+    public TextMeshProUGUI hiscoreTextInPausePanel;
+    public TextMeshProUGUI hiScorePauseLabel;
     public TextMeshProUGUI hiscoreText2;
     public TextMeshProUGUI gameOverText;
     public Button retryButton;
+
+    public TextMeshProUGUI hiScoreTruePauseLabel;
+
+
 
     private Player player;
     private Spawner spawner;
@@ -47,9 +53,11 @@ public class GameManager : MonoBehaviour
 
     private float startTime;
 
+    AudioManager audioManager;
 
     private void Awake()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         if (Instance != null)
             DestroyImmediate(gameObject);
         else
@@ -98,8 +106,10 @@ public class GameManager : MonoBehaviour
         gameSpeed = 0f;
         enabled = false;
 
+        audioManager.PlaySFX(audioManager.death);
         player.gameObject.SetActive(false);
         spawner.gameObject.SetActive(false);
+
         
         retryButton.gameObject.SetActive(true);
 
@@ -148,17 +158,16 @@ public class GameManager : MonoBehaviour
         {
            hiscore = score;
             hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5");
-            hiscoreText1.text = Mathf.FloorToInt(hiscore).ToString("D5");
+            hiscoreTextInPausePanel.text = Mathf.FloorToInt(hiscore).ToString("D5");
             hiscoreText2.text = Mathf.FloorToInt(hiscore).ToString("D5");
         }
         
 
         score += gameSpeed * Time.deltaTime;
         scoreText.text = Mathf.FloorToInt(score).ToString("D5");
-        scoreText1.text = Mathf.FloorToInt(score).ToString("D5");
+        scoreTextInPausePanel.text = Mathf.FloorToInt(score).ToString("D5");
         scoreText2.text = Mathf.FloorToInt(score).ToString("D5");
         scoreText3.text = Mathf.FloorToInt(score).ToString("D5");
-        scoreText4.text = Mathf.FloorToInt(score).ToString("D5");
 
     }
 
@@ -173,11 +182,15 @@ public class GameManager : MonoBehaviour
         float hiscore = PlayerPrefs.GetFloat("hiscore", 0);
         if (score > hiscore)
         {
+            hiscoreTextInPausePanel.gameObject.SetActive(false);
+            hiScorePauseLabel.gameObject.SetActive(false);
+            hiScoreTruePauseLabel.gameObject.SetActive(true);
             if (!isPaused)
             {
                 isPaused = true;
                 Time.timeScale = 0f;
-                PauseHiPanel.SetActive(true);
+
+                PausePanel.SetActive(true);
                 scoreText.gameObject.SetActive(false);
                 hiscoreText.gameObject.SetActive(false);
                 label.SetActive(false);
@@ -187,7 +200,7 @@ public class GameManager : MonoBehaviour
             {
                 isPaused = false;
                 Time.timeScale = 1f;
-                PauseHiPanel.SetActive(false);
+                PausePanel.SetActive(false);
                 scoreText.gameObject.SetActive(true);
                 hiscoreText.gameObject.SetActive(true);
                 label.SetActive(true);
@@ -232,9 +245,8 @@ public class GameManager : MonoBehaviour
         }
 
         hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5");
-        hiscoreText1.text = Mathf.FloorToInt(hiscore).ToString("D5");
+        hiscoreTextInPausePanel.text = Mathf.FloorToInt(hiscore).ToString("D5");
         hiscoreText2.text = Mathf.FloorToInt(hiscore).ToString("D5");
-
 
     }
 }
