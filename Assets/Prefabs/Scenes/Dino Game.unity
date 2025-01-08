@@ -428,7 +428,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25, y: 0}
+  m_AnchoredPosition: {x: 5, y: 0}
   m_SizeDelta: {x: 1000, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &96122309
@@ -1958,15 +1958,15 @@ MonoBehaviour:
   Teacher: {fileID: 1889218597}
   NewRecord: {fileID: 1858055206}
   initialGameSpeed: 5
-  gameSpeedIncrease: 35.95
+  gameSpeedIncrease: 0.1
   label: {fileID: 1479476363}
   labelHI: {fileID: 1891624950}
-  scoreText: {fileID: 1382386522}
+  scoreTextInGame: {fileID: 1382386522}
   scoreTextInPausePanel: {fileID: 733711395}
   scorePauseLabel: {fileID: 1323244348}
   scoreText2: {fileID: 17730393}
   scoreText3: {fileID: 1316157671}
-  hiscoreText: {fileID: 975735142}
+  hiscoreTextInGame: {fileID: 975735142}
   hiscoreTextInPausePanel: {fileID: 593316920}
   hiScorePauseLabel: {fileID: 1172401722}
   hiscoreText2: {fileID: 1725238553}
@@ -2986,7 +2986,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1100, y: -38}
+  m_AnchoredPosition: {x: -970, y: -38}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &975735142
@@ -4334,7 +4334,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -700, y: -38}
+  m_AnchoredPosition: {x: -610, y: -38}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1382386522
@@ -4598,7 +4598,7 @@ GameObject:
   - component: {fileID: 1479476366}
   - component: {fileID: 1479476365}
   m_Layer: 5
-  m_Name: LabelScore
+  m_Name: LabelScoreInGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4621,7 +4621,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -850, y: -32}
+  m_AnchoredPosition: {x: -760, y: -30}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1479476365
@@ -5970,7 +5970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 10
-  gravity: 19.62
+  gravity: 22
 --- !u!143 &1761820340
 CharacterController:
   m_ObjectHideFlags: 0
@@ -6049,7 +6049,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1761820338}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.05, y: 0.7, z: 0}
+  m_LocalPosition: {x: -1.493, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6574,7 +6574,7 @@ GameObject:
   - component: {fileID: 1891624953}
   - component: {fileID: 1891624952}
   m_Layer: 5
-  m_Name: LabelHiscore
+  m_Name: LabelHiscoreInGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6597,7 +6597,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1245, y: -32}
+  m_AnchoredPosition: {x: -1120, y: -32}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1891624952

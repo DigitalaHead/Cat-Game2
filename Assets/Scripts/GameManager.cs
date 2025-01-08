@@ -21,17 +21,17 @@ public class GameManager : MonoBehaviour
     public GameObject NewRecord;
 
     public float initialGameSpeed = 10f;
-    public float gameSpeedIncrease = 5f;
+    public float gameSpeedIncrease = 0.5f;
     public float gameSpeed { get; private set; }
 
     public GameObject label;
     public GameObject labelHI;
-    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI scoreTextInGame;
     public TextMeshProUGUI scoreTextInPausePanel;
     public TextMeshProUGUI scorePauseLabel;
     public TextMeshProUGUI scoreText2;
     public TextMeshProUGUI scoreText3;
-    public TextMeshProUGUI hiscoreText;
+    public TextMeshProUGUI hiscoreTextInGame;
     public TextMeshProUGUI hiscoreTextInPausePanel;
     public TextMeshProUGUI hiScorePauseLabel;
     public TextMeshProUGUI hiscoreText2;
@@ -110,7 +110,14 @@ public class GameManager : MonoBehaviour
         player.gameObject.SetActive(false);
         spawner.gameObject.SetActive(false);
 
-        
+        scoreTextInGame.gameObject.SetActive(false);
+        hiscoreTextInGame.gameObject.SetActive(false);
+        label.SetActive(false);
+        labelHI.SetActive(false);
+
+    
+
+
         retryButton.gameObject.SetActive(true);
 
         float hiscore = PlayerPrefs.GetFloat("hiscore", 0);
@@ -138,6 +145,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        gameSpeed += gameSpeedIncrease * Time.deltaTime;
         if (Time.time - startTime > 5.0f) // Проверка, прошли ли первые 5 секунды
         {
             Teacher.gameObject.SetActive(false); ; 
@@ -157,14 +165,14 @@ public class GameManager : MonoBehaviour
         if(hiscore == 0)
         {
            hiscore = score;
-            hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5");
+            hiscoreTextInGame.text = Mathf.FloorToInt(hiscore).ToString("D5");
             hiscoreTextInPausePanel.text = Mathf.FloorToInt(hiscore).ToString("D5");
             hiscoreText2.text = Mathf.FloorToInt(hiscore).ToString("D5");
         }
         
 
         score += gameSpeed * Time.deltaTime;
-        scoreText.text = Mathf.FloorToInt(score).ToString("D5");
+        scoreTextInGame.text = Mathf.FloorToInt(score).ToString("D5");
         scoreTextInPausePanel.text = Mathf.FloorToInt(score).ToString("D5");
         scoreText2.text = Mathf.FloorToInt(score).ToString("D5");
         scoreText3.text = Mathf.FloorToInt(score).ToString("D5");
@@ -191,8 +199,8 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f;
 
                 PausePanel.SetActive(true);
-                scoreText.gameObject.SetActive(false);
-                hiscoreText.gameObject.SetActive(false);
+                scoreTextInGame.gameObject.SetActive(false);
+                hiscoreTextInGame.gameObject.SetActive(false);
                 label.SetActive(false);
                 labelHI.SetActive(false);
             }
@@ -201,8 +209,8 @@ public class GameManager : MonoBehaviour
                 isPaused = false;
                 Time.timeScale = 1f;
                 PausePanel.SetActive(false);
-                scoreText.gameObject.SetActive(true);
-                hiscoreText.gameObject.SetActive(true);
+                scoreTextInGame.gameObject.SetActive(true);
+                hiscoreTextInGame.gameObject.SetActive(true);
                 label.SetActive(true);
                 labelHI.SetActive(true);
             }
@@ -215,8 +223,8 @@ public class GameManager : MonoBehaviour
                 isPaused = true;
                 Time.timeScale = 0f;
                 PausePanel.SetActive(true);
-                scoreText.gameObject.SetActive(false);
-                hiscoreText.gameObject.SetActive(false);
+                scoreTextInGame.gameObject.SetActive(false);
+                hiscoreTextInGame.gameObject.SetActive(false);
                 label.SetActive(false);
                 labelHI.SetActive(false);
             }
@@ -225,8 +233,8 @@ public class GameManager : MonoBehaviour
                 isPaused = false;
                 Time.timeScale = 1f;
                 PausePanel.SetActive(false);
-                scoreText.gameObject.SetActive(true);
-                hiscoreText.gameObject.SetActive(true);
+                scoreTextInGame.gameObject.SetActive(true);
+                hiscoreTextInGame.gameObject.SetActive(true);
                 label.SetActive(true);
                 labelHI.SetActive(true);
             }
@@ -244,7 +252,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetFloat("hiscore", hiscore);
         }
 
-        hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5");
+        hiscoreTextInGame.text = Mathf.FloorToInt(hiscore).ToString("D5");
         hiscoreTextInPausePanel.text = Mathf.FloorToInt(hiscore).ToString("D5");
         hiscoreText2.text = Mathf.FloorToInt(hiscore).ToString("D5");
 

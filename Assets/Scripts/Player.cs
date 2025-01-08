@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private Vector3 direction;
 
     public float jumpForce = 1f;
-    public float gravity = 9.81f * 2f;
+    public float gravity = 9.81f * 3f;
 
     private void Awake()
     {
